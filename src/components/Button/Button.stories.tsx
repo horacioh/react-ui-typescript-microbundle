@@ -1,33 +1,41 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { text, boolean, number } from '@storybook/addon-knobs';
+import { text, select, boolean } from "@storybook/addon-knobs";
 
 import { Button } from "./Button";
 
-// storiesOf("Welcome", module).add("to Storybook", () => (
-//   <div>
-//     <h1>Coeli UI Library Design System</h1>
-//   </div>
-// ));
+const knobs = {
+  variant: {
+    label: "Variant",
+    options: ["primary", "secondary"]
+  },
+  icon: {
+    label: "Icon",
+    options: []
+  },
+  disabled: {
+    label: 'disabled',
+    defaultValue: false
+  }
+};
 
 storiesOf("Button", module)
-.addParameters({
-  info: {
-    // Make a default for all stories in this book,
-    inline: true, // where the components are inlined
-    styles: {
-      header: {
-        h1: {
-          color: 'red', // and the headers of the sections are red.
-        },
-      },
-    },
-  },
-})
   .add("Primary Button", () => (
-    <Button variant="primary" onClick={action("clicked")}>{text('Label', 'Primary Button')}</Button>
+    <Button
+      variant={select(knobs.variant.label, knobs.variant.options, "primary")}
+      onClick={action("clicked")}
+      disabled={boolean(knobs.disabled.label, knobs.disabled.defaultValue)}
+    >
+      {text("Label", "Primary Button")}
+    </Button>
   ))
   .add("Secondary Button", () => (
-    <Button variant="secondary" onClick={action("clicked")}>{text('Label', 'Secondary Button')}</Button>
+    <Button
+      variant={select(knobs.variant.label, knobs.variant.options, "secondary")}
+      onClick={action("clicked")}
+      disabled={boolean(knobs.disabled.label, knobs.disabled.defaultValue)}
+    >
+      {text("Label", "Secondary Button")}
+    </Button>
   ));
